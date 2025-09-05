@@ -10,9 +10,9 @@ on:
     branches:
       - main
 
-concurrency:
-  group: 'ci-workflow'
-  cancel-in-progress: false
+# concurrency:
+#   group: 'ci-workflow'
+#   cancel-in-progress: false
 
 jobs:
   build:
