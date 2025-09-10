@@ -5,10 +5,12 @@ on:
     types: [opened, synchronize, reopened]
     branches:
       - main
+      - feat  
   workflow_dispatch:
   push:
     branches:
       - main
+      - feat
 
 concurrency:
   group: 'ci-workflow'
