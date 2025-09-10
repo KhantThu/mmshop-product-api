@@ -6,23 +6,16 @@ on:
     types: [opened, synchronize, reopened]
     branches:
       - main
-      - feat  
-  workflow_dispatch:
   push:
     branches:
       - main
       - feat
 
 
+
 concurrency:
-  group: 'ci-workflow'
-  cancel-in-progress: false
-# concurrency:
-#   group: "${{ github.workflow }}-${{ github.ref }}"
-#   cancel-in-progress: true
-# concurrency:
-#   group: "${{ github.workflow }}-${{ github.ref }}"
-#   cancel-in-progress: true
+  group: "${{ github.workflow }}-${{ github.ref }}"
+  cancel-in-progress: true
 
 jobs:
   build:
