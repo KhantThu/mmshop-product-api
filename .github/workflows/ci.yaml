@@ -1,16 +1,29 @@
 name: CI Workflow
 
+# on:
+#   pull_request:
+#     types: [opened, synchronize, reopened]
+#     branches:
+#       - main
+#       - feat  
+#   workflow_dispatch:
+#   push:
+#     branches:
+#       - main
+#       - feat
 on:
   pull_request:
-    types: [opened, synchronize, reopened]
     branches:
       - main
-      - feat  
+    types:
+      - opened
+      - synchronize
+      - reopened
   workflow_dispatch:
   push:
     branches:
       - main
-      - feat
+
 
 concurrency:
   group: 'ci-workflow'
