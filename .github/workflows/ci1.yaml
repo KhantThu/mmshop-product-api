@@ -2,29 +2,19 @@ name: CI Workflow
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened]
-    branches:
-      - main
+  types: [ opened, synchronize, reopened]
+  branches:
+    - main
   workflow_dispatch:
   push:
     branches:
       - main
 
-concurrency:
-  group: 'ci-workflow'
-  cancel-in-progress: false
-# concurrency:
-#   group: "${{ github.workflow }}-${{ github.ref }}"
-#   cancel-in-progress: true
-# concurrency:
-#   group: "${{ github.workflow }}-${{ github.ref }}"
-#   cancel-in-progress: true
-
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: Checkout Code
         uses: actions/checkout@v4
 
       - name: Set up Node.js
@@ -45,10 +35,10 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
+      - name: Set up Nodejs
         uses: actions/setup-node@v4
         with:
           node-version: '20'
@@ -57,18 +47,20 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build the project
+      - name: prisma generate
+        run: npx prisma generate
+
+      - name: Test the project
         run: npm run lint
 
   test:
     env:
-      DATABASE_URL: postgres://${{ secrets.POSTGRES_USENAME }}:${{secrets.POSTGRES_PASSWORD}}@localhost:5432/shop-product-docker
-    runs-on: ubuntu-latest
+      DATABASE_URL: postgres://${{ secrets.POSTGRES_USER}}:${{ secrets.POSTGRES_PASSWORD}}@localhost:5432/shop-product-docker
     services:
       postgres:
         image: postgres:17
         env:
-          POSTGRES_USER: ${{ secrets.POSTGRES_USENAME }}
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
           POSTGRES_DB: shop-product-docker
         ports:
@@ -78,30 +70,30 @@ jobs:
           --health-interval=10s
           --health-timeout=5s
           --health-retries=5
-
     needs:
       - build
       - lint
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
+      - name: Setup Nodejs
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
+
       - name: Install dependencies
         run: npm ci
-
+      
       - name: prisma generate
-        run: npx prisma
+        run: npx prisma generate
 
-
-      - name: prisma migrate deploy
+      - name: db migrate
         run: npm run db:migrate
 
-      - name: Run tests
+      - name: Runs test 
         run: npm test
 
       - name: Run test coverage
@@ -113,5 +105,4 @@ jobs:
           name: coverage-report
           path: coverage
 
-
-
+    
