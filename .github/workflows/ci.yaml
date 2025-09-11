@@ -10,8 +10,15 @@ on:
     branches:
       - main
 
+concurrency:
+  group: 'ci-workflow'
+  cancel-in-progress: false
+# concurrency:
+#   group: "${{ github.workflow }}-${{ github.ref }}"
+#   cancel-in-progress: true
+
 jobs:
-  build
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
