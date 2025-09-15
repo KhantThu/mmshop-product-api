@@ -47,3 +47,6 @@ jobs:
         run: | 
           docker tag mmshop-product-api ${{ secrets.DOCKER_HUB_USERNAME }}/mmshop-product-api:latest
           docker push ${{ secrets.DOCKER_HUB_USERNAME }}/mmshop-product-api:latest
+
+
+
