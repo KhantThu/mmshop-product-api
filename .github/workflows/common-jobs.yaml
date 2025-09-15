@@ -40,7 +40,7 @@ jobs:
         run: npm run build
 
   lint:
-    if: ${{ inputs.is_release = false }}
+    if: ${{ inputs.is_release == false }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
