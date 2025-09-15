@@ -6,12 +6,9 @@ on:
     types: [opened, synchronize, reopened]
     branches:
       - main
-  # push:
-  #   branches:
-  #     - main
-  #     - feat
-
-
+  push:
+    branches:
+      - main
 
 concurrency:
   group: 'ci-workflow'
@@ -62,13 +59,13 @@ jobs:
 
   test:
     env:
-      DATABASE_URL: postgres://${{ secrets.POSTGRES_USERNAME }}:${{secrets.POSTGRES_PASSWORD}}@localhost:5432/shop-product-docker
+      DATABASE_URL: postgres://${{ secrets.POSTGRES_USENAME }}:${{secrets.POSTGRES_PASSWORD}}@localhost:5432/shop-product-docker
     runs-on: ubuntu-latest
     services:
       postgres:
         image: postgres:17
         env:
-          POSTGRES_USER: ${{ secrets.POSTGRES_USERNAME }}
+          POSTGRES_USER: ${{ secrets.POSTGRES_USENAME }}
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
           POSTGRES_DB: shop-product-docker
         ports:
