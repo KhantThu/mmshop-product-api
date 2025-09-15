@@ -12,9 +12,13 @@ on:
       - feat
 
 
+
 concurrency:
-  group: "${{ github.workflow }}-${{ github.ref }}"
-  cancel-in-progress: true
+  group: 'ci-workflow'
+  cancel-in-progress: false
+# concurrency:
+#   group: "${{ github.workflow }}-${{ github.ref }}"
+#   cancel-in-progress: true
 
 jobs:
   build:
