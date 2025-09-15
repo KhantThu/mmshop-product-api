@@ -60,7 +60,7 @@ jobs:
 
   test:
     env:
-      DATABASE_URL: postgres://${{ secrets.POSTGRES_USENAME }}:${{secrets.POSTGRES_PASSWORD}}@localhost:5432/shop-product-docker
+      DATABASE_URL: postgres://${{ secrets.POSTGRES_USERNAME }}:${{secrets.POSTGRES_PASSWORD}}@localhost:5432/shop-product-docker
     runs-on: ubuntu-latest
     services:
       postgres:
@@ -79,7 +79,7 @@ jobs:
 
     needs:
       - build
-      - lint
+      # - lint
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
