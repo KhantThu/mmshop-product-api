@@ -81,7 +81,7 @@ jobs:
 
       - name: Set up Node.js environment
         id: setup-node
-        uses: ./.github/node-setup-action
+        uses: ./.github/actions/node-setup-action
         with:
           node-version: '20'
 
